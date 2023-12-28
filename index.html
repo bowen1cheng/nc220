@@ -1,36 +1,63 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Table</title>
+    <title>Editable Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
 
-    <h1>My Table</h1>
+<table id="editableTable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td contenteditable="true">John Doe</td>
+            <td contenteditable="true">john@example.com</td>
+            <td contenteditable="true">25</td>
+        </tr>
+        <tr>
+            <td contenteditable="true">Jane Doe</td>
+            <td contenteditable="true">jane@example.com</td>
+            <td contenteditable="true">30</td>
+        </tr>
+    </tbody>
+</table>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Age</th>
-                <th>City</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>John Doe</td>
-                <td>25</td>
-                <td>New York</td>
-            </tr>
-            <tr>
-                <td>Jane Smith</td>
-                <td>30</td>
-                <td>San Francisco</td>
-            </tr>
-        </tbody>
-    </table>
+<script>
+    // Add event listeners to the table cells for editing
+    var table = document.getElementById("editableTable");
+    for (var i = 0; i < table.rows.length; i++) {
+        for (var j = 0; j < table.rows[i].cells.length; j++) {
+            table.rows[i].cells[j].addEventListener("input", function() {
+                // Save the edited content to localStorage or send it to a server for storage
+                // For simplicity, we'll just display the edited content in the console
+                console.log("Edited: " + this.textContent);
+            });
+        }
+    }
+</script>
 
 </body>
 </html>
