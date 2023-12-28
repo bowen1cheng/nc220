@@ -56,28 +56,32 @@
     var table = document.getElementById("editableTable");
     for (var i = 0; i < table.rows.length; i++) {
         for (var j = 0; j < table.rows[i].cells.length; j++) {
-            table.rows[i].cells[j].addEventListener("input", function() {
-                // 获取编辑后的内容
-                var editedContent = this.textContent;
+            // 使用立即调用的函数表达式 (IIFE) 来捕获正确的值
+            (function (i, j) {
+                table.rows[i].cells[j].addEventListener("input", function() {
+                    // 获取编辑后的内容
+                    var editedContent = this.textContent;
 
-                // 获取对应数据的 ID（这里简化处理，实际情况中可能需要更复杂的逻辑）
-                var dataId = i;
+                    // 获取对应数据的 ID
+                    var dataId = i;
 
-                // 更新 Firestore 中的数据
-                db.collection("default").doc(dataId.toString()).update({
-                    columnName: editedContent
-                })
-                .then(function() {
-                    console.log("Document successfully updated!");
-                })
-                .catch(function(error) {
-                    console.error("Error updating document: ", error);
+                    // 更新 Firestore 中的数据
+                    db.collection("default").doc(dataId.toString()).update({
+                        columnName: editedContent
+                    })
+                    .then(function() {
+                        console.log("Document successfully updated!");
+                    })
+                    .catch(function(error) {
+                        console.error("Error updating document: ", error);
+                    });
                 });
-            });
+            })(i, j);
         }
     }
 </script>
 
 </body>
 </html>
+
 
