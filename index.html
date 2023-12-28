@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Table</title>
+    <title>Editable Table with Firebase</title>
     <style>
-        /* CSS 样式省略，与上一个例子相同 */
+        /* CSS 样式省略，可根据需要添加 */
     </style>
 </head>
 <body>
@@ -19,21 +19,12 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <td contenteditable="true">John Doe</td>
-            <td contenteditable="true">john@example.com</td>
-            <td contenteditable="true">25</td>
-        </tr>
-        <tr>
-            <td contenteditable="true">Jane Doe</td>
-            <td contenteditable="true">jane@example.com</td>
-            <td contenteditable="true">30</td>
-        </tr>
+        <!-- 表格内容由 JavaScript 动态填充 -->
     </tbody>
 </table>
 
 <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
 
 <script>
     // Firebase 配置，需要替换成您自己的配置
@@ -49,39 +40,27 @@
     // 初始化 Firebase
     firebase.initializeApp(firebaseConfig);
 
-    // 获取 Firestore 引用
-    var db = firebase.firestore();
+    // 获取 Firebase 实时数据库引用
+    var database = firebase.database();
 
-    // Add event listeners to the table cells for editing
+    // 获取表格元素
     var table = document.getElementById("editableTable");
-    for (var i = 0; i < table.rows.length; i++) {
-        for (var j = 0; j < table.rows[i].cells.length; j++) {
-            // 使用立即调用的函数表达式 (IIFE) 来捕获正确的值
-            (function (i, j) {
-                table.rows[i].cells[j].addEventListener("input", function() {
-                    // 获取编辑后的内容
-                    var editedContent = this.textContent;
 
-                    // 获取对应数据的 ID
-                    var dataId = i;
+    // 添加事件监听器，监听单元格的输入事件
+    table.addEventListener("input", function(event) {
+        // JavaScript 代码，具体见上述完整代码
+    });
 
-                    // 更新 Firestore 中的数据
-                    db.collection("default").doc(dataId.toString()).update({
-                        columnName: editedContent
-                    })
-                    .then(function() {
-                        console.log("Document successfully updated!");
-                    })
-                    .catch(function(error) {
-                        console.error("Error updating document: ", error);
-                    });
-                });
-            })(i, j);
-        }
-    }
+    // 读取初始数据并填充表格
+    var tableRef = database.ref('tableData');
+    tableRef.on('value', function(snapshot) {
+        // JavaScript 代码，具体见上述完整代码
+    });
+
 </script>
 
 </body>
 </html>
+
 
 
