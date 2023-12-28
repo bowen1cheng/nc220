@@ -3,60 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Table with Firebase</title>
+    <title>HTML with Inline JavaScript</title>
     <style>
         /* CSS 样式省略，可根据需要添加 */
     </style>
 </head>
 <body>
 
-<table id="editableTable">
+<h2>Inline JavaScript Example</h2>
+
+<table id="exampleTable">
     <thead>
         <tr>
+            <th>ID</th>
             <th>Name</th>
-            <th>Email</th>
-            <th>Age</th>
+            <th>Score</th>
         </tr>
     </thead>
     <tbody>
-        <!-- 表格内容由 JavaScript 动态填充 -->
+        <!-- Table content will be dynamically added using inline JavaScript -->
     </tbody>
 </table>
 
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-database.js"></script>
-
 <script>
-    // Firebase 配置，需要替换成您自己的配置
-    var firebaseConfig = {
-        apiKey: "AIzaSyA5vRSuiwahJJYOQm4xVgZDhTWHGS2n0C8",
-        authDomain: "test1-47c57.firebaseapp.com",
-        projectId: "test1-47c57",
-        storageBucket: "test1-47c57.appspot.com",
-        messagingSenderId: "577146846135",
-        appId: "1:577146846135:web:052d0e0c0dfe14a4314632",
-    };
+    // Inline JavaScript code goes here
 
-    // 初始化 Firebase
-    firebase.initializeApp(firebaseConfig);
+    // Example data
+    var students = [
+        { id: 1, name: 'John Doe', score: 85 },
+        { id: 2, name: 'Jane Doe', score: 92 },
+        { id: 3, name: 'Bob Smith', score: 78 }
+    ];
 
-    // 获取 Firebase 实时数据库引用
-    var database = firebase.database();
+    // Populate the table with data
+    var table = document.getElementById("exampleTable");
+    var tbody = table.getElementsByTagName("tbody")[0];
 
-    // 获取表格元素
-    var table = document.getElementById("editableTable");
-
-    // 添加事件监听器，监听单元格的输入事件
-    table.addEventListener("input", function(event) {
-        // JavaScript 代码，具体见上述完整代码
+    students.forEach(function(student) {
+        var row = tbody.insertRow();
+        row.insertCell(0).textContent = student.id;
+        row.insertCell(1).textContent = student.name;
+        row.insertCell(2).textContent = student.score;
     });
-
-    // 读取初始数据并填充表格
-    var tableRef = database.ref('tableData');
-    tableRef.on('value', function(snapshot) {
-        // JavaScript 代码，具体见上述完整代码
-    });
-
 </script>
 
 </body>
