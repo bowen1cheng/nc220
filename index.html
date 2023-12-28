@@ -64,7 +64,7 @@
                 var dataId = i;
 
                 // 更新 Firestore 中的数据
-                db.collection("338831").doc(dataId.toString()).update({
+                db.collection("default").doc(dataId.toString()).update({
                     columnName: editedContent
                 })
                 .then(function() {
