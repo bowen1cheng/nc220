@@ -5,20 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editable Table</title>
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-        th, td {
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
+        /* CSS 样式省略，与上一个例子相同 */
     </style>
 </head>
 <body>
@@ -45,15 +32,47 @@
     </tbody>
 </table>
 
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
+
 <script>
+    // Firebase 配置，需要替换成您自己的配置
+    var firebaseConfig = {
+        apiKey: "AIzaSyA5vRSuiwahJJYOQm4xVgZDhTWHGS2n0C8",
+        authDomain: "test1-47c57.firebaseapp.com",
+        projectId: "test1-47c57",
+        storageBucket: "test1-47c57.appspot.com",
+        messagingSenderId: "577146846135",
+        appId: "1:577146846135:web:052d0e0c0dfe14a4314632",
+    };
+
+    // 初始化 Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    // 获取 Firestore 引用
+    var db = firebase.firestore();
+
     // Add event listeners to the table cells for editing
     var table = document.getElementById("editableTable");
     for (var i = 0; i < table.rows.length; i++) {
         for (var j = 0; j < table.rows[i].cells.length; j++) {
             table.rows[i].cells[j].addEventListener("input", function() {
-                // Save the edited content to localStorage or send it to a server for storage
-                // For simplicity, we'll just display the edited content in the console
-                console.log("Edited: " + this.textContent);
+                // 获取编辑后的内容
+                var editedContent = this.textContent;
+
+                // 获取对应数据的 ID（这里简化处理，实际情况中可能需要更复杂的逻辑）
+                var dataId = i;
+
+                // 更新 Firestore 中的数据
+                db.collection("338831").doc(dataId.toString()).update({
+                    columnName: editedContent
+                })
+                .then(function() {
+                    console.log("Document successfully updated!");
+                })
+                .catch(function(error) {
+                    console.error("Error updating document: ", error);
+                });
             });
         }
     }
@@ -61,3 +80,4 @@
 
 </body>
 </html>
+
