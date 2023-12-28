@@ -3,16 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML with Inline JavaScript</title>
+    <title>Editable Table with Excel Export</title>
     <style>
-        /* CSS 样式省略，可根据需要添加 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 </head>
 <body>
 
-<h2>Inline JavaScript Example</h2>
+<h2>Editable Table with Excel Export</h2>
 
-<table id="exampleTable">
+<table id="editableTable">
     <thead>
         <tr>
             <th>ID</th>
@@ -25,6 +39,8 @@
     </tbody>
 </table>
 
+<button onclick="exportToExcel()">Export to Excel</button>
+
 <script>
     // Inline JavaScript code goes here
 
@@ -36,19 +52,28 @@
     ];
 
     // Populate the table with data
-    var table = document.getElementById("exampleTable");
+    var table = document.getElementById("editableTable");
     var tbody = table.getElementsByTagName("tbody")[0];
 
     students.forEach(function(student) {
         var row = tbody.insertRow();
         row.insertCell(0).textContent = student.id;
         row.insertCell(1).textContent = student.name;
-        row.insertCell(2).textContent = student.score;
+        var scoreCell = row.insertCell(2);
+        scoreCell.contentEditable = true; // Allow editing
+        scoreCell.textContent = student.score;
     });
+
+    // Function to export table data to Excel
+    function exportToExcel() {
+        var wb = XLSX.utils.table_to_book(document.getElementById("editableTable"), {sheet: "Sheet JS"});
+        XLSX.writeFile(wb, 'table_data.xlsx');
+    }
 </script>
 
 </body>
 </html>
+
 
 
 
