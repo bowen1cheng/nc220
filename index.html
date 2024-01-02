@@ -7,35 +7,20 @@
     <title>Editable Table with Firestore Update</title>
     <style>
         table {
-            border-collapse: collapse;
-            width: 100%;
-        }
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-        table,
-        th,
-        td {
-            border: 1px solid black;
-        }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid black; /* 保留其他边框 */
+    }
 
-        th,
-        td {
-            padding: 8px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        /* 设置表格2上方边框颜色为白色 */
-        #editableTable {
-            border-top-color: white;
-        }
-
-        /* 设置合并后表格的上方边框颜色为白色 */
-        table#editableTable {
-            border-top-color: white;
-        }
+    th {
+        background-color: #f2f2f2;
+        border-top: 1px solid transparent; /* 将上边框颜色设为透明 */
+    }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
