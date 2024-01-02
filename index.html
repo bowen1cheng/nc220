@@ -66,12 +66,23 @@
         // Get Firestore reference
         var db = firebase.firestore();
         const collectionName = "students";
+
         // 获取集合中的数据
         db.collection(collectionName)
             .orderBy("id")
             .get()
             .then((querySnapshot) => {
                 let html = '';
+
+                // 添加新行
+                html += `
+                    <tr>
+                        <td>Module Code</td>
+                        <td>2-1-4</td>
+                        <td contentEditable></td>
+                    </tr>
+                `;
+
                 querySnapshot.forEach((doc) => {
                     let item = doc.data();
                     item._id = doc.id;
@@ -89,6 +100,7 @@
             .catch((error) => {
                 console.error("Error getting documents: ", error);
             });
+
         function handleBlur(event, _id) {
             // 处理失去焦点事件
             const newValue = event.target.textContent;
@@ -104,12 +116,12 @@
                     console.error('Error updating data:', error);
                 });
         }
-
     </script>
 
 </body>
 
 </html>
+
 
 
 
