@@ -72,21 +72,12 @@
         var db = firebase.firestore();
         const collectionName = "students";
 
-        // 添加新行的 HTML 代码
-        var newLineHTML = `
-            <tr>
-                <td>Module Code</td>
-                <td>2-1-4</td>
-                <td contentEditable></td>
-            </tr>
-        `;
-
         // 获取集合中的数据
         db.collection(collectionName)
             .orderBy("id")
             .get()
             .then((querySnapshot) => {
-                let html = newLineHTML;  // 将新行添加到 HTML 变量中
+                let html = '';
 
                 querySnapshot.forEach((doc) => {
                     let item = doc.data();
