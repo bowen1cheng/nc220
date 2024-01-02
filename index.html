@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,103 +10,105 @@
             border-collapse: collapse;
             width: 100%;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-firestore.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 </head>
+
 <body>
 
-<h2>Editable Table with Firestore Update</h2>
+    <h2>Editable Table with Firestore Update</h2>
 
-<table id="editableTable">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Score</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- Table content will be dynamically added using inline JavaScript -->
-    </tbody>
-</table>
+    <table id="editableTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
 
-<button onclick="exportToExcel()">Export to Excel</button>
+        </tbody>
+    </table>
 
-<script>
-    // Firebase 配置，需要替换成您自己的配置
-    var firebaseConfig = {
-        apiKey: "AIzaSyA5vRSuiwahJJYOQm4xVgZDhTWHGS2n0C8",
-        authDomain: "test1-47c57.firebaseapp.com",
-        projectId: "test1-47c57",
-        storageBucket: "test1-47c57.appspot.com",
-        messagingSenderId: "577146846135",
-        appId: "1:577146846135:web:052d0e0c0dfe14a4314632",
-        measurementId: "G-MJX9LY2R15"
-    };
-    
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
+    <script>
+        // Firebase 配置，需要替换成您自己的配置
+        var firebaseConfig = {
+            apiKey: "AIzaSyAieo87PuMM8udmYTa9uwE0DaGvfpeK5X4",
+            authDomain: "table-b091a.firebaseapp.com",
+            projectId: "table-b091a",
+            storageBucket: "table-b091a.appspot.com",
+            messagingSenderId: "583106973229",
+            appId: "1:583106973229:web:04b0dcc889f394d22cf2a4",
+            measurementId: "G-M0HQP10EX0"
+        };
 
-    // Get Firestore reference
-    var db = firebase.firestore();
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
 
-    // Example data
-    var students = [
-        { id: 1, name: 'John Doe', score: 85 },
-        { id: 2, name: 'Jane Doe', score: 92 },
-        { id: 3, name: 'Bob Smith', score: 70 }
-    ];
-
-    // Populate the table with data
-    var table = document.getElementById("editableTable");
-    var tbody = table.getElementsByTagName("tbody")[0];
-
-    students.forEach(function(student) {
-        var row = tbody.insertRow();
-        row.insertCell(0).textContent = student.id;
-        row.insertCell(1).textContent = student.name;
-        var scoreCell = row.insertCell(2);
-        scoreCell.contentEditable = true; // Allow editing
-        scoreCell.textContent = student.score;
-
-        // Add event listener to capture changes and update Firestore
-        scoreCell.addEventListener('blur', function() {
-            var updatedScore = parseInt(scoreCell.textContent, 10);
-            var studentId = parseInt(row.cells[0].textContent, 10);
-
-            // Update Firestore with the new score
-            db.collection("students").doc(studentId.toString()).update({
-                score: updatedScore
+        // Get Firestore reference
+        var db = firebase.firestore();
+        const collectionName = "students";
+        // 获取集合中的数据
+        db.collection(collectionName)
+            .orderBy("id")
+            .get()
+            .then((querySnapshot) => {
+                let html = '';
+                querySnapshot.forEach((doc) => {
+                    let item = doc.data();
+                    item._id = doc.id;
+                    console.log("item = ", item);
+                    html += `
+                        <tr>
+                            <td>${item.id}</td>
+                            <td>${item.name}</td>
+                            <td onblur="handleBlur(event, '${item._id}')" contentEditable>${item.score}</td>
+                        </tr>
+                    `
+                });
+                document.getElementById('tbody').innerHTML = html;
             })
-            .then(function() {
-                console.log("Document successfully updated!");
-            })
-            .catch(function(error) {
-                console.error("Error updating document: ", error);
+            .catch((error) => {
+                console.error("Error getting documents: ", error);
             });
-        });
-    });
+        function handleBlur(event, _id) {
+            // 处理失去焦点事件
+            const newValue = event.target.textContent;
+            console.log("New value:", newValue);
+            console.log("_id = ", _id)
+            // 保存新值到数据库
+            db.collection(collectionName).doc(_id).update({
+                score: newValue
+            }).then(() => {
+                console.log('Data updated successfully!');
+            })
+                .catch((error) => {
+                    console.error('Error updating data:', error);
+                });
+        }
 
-    // Function to export table data to Excel
-    function exportToExcel() {
-        var wb = XLSX.utils.table_to_book(document.getElementById("editableTable"), {sheet: "Sheet JS"});
-        XLSX.writeFile(wb, 'table_data.xlsx');
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
 
 
