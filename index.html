@@ -43,6 +43,7 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px; /* 添加这一行，设置按钮与表格之间的间距 */
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
@@ -52,11 +53,7 @@
 <body>
     <div class="tit-box">
         <h2>Editable Table with Firestore Update</h2>
-        <div id="save-btn" class="save-btn">
-            Save
-        </div>
     </div>
-
 
     <table id="editableTable">
         <thead>
@@ -74,6 +71,10 @@
 
         </tbody>
     </table>
+
+    <div id="save-btn" class="save-btn">
+        Save
+    </div>
 
     <script>
         var datas = [];
@@ -151,6 +152,7 @@
 </body>
 
 </html>
+
 
 
 
