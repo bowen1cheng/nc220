@@ -168,9 +168,9 @@
             document.querySelectorAll('#editableTable tbody tr').forEach((row) => {
                 const id = row.getAttribute('_id');
                 console.log("_id = ", id)
-                const score = row.querySelector('td:nth-child(3)').textContent;
-                const score1 = row.querySelector('td:nth-child(4)').textContent;
-                const score2 = row.querySelector('td:nth-child(5)').textContent;
+                const score = row.querySelector('td:nth-child(5)').textContent;
+                const score1 = row.querySelector('td:nth-child(6)').textContent;
+                const score2 = row.querySelector('td:nth-child(7)').textContent;
 
                 // Update Firestore
                 db.collection(collectionName).doc(id).update({
