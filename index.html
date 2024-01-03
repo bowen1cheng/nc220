@@ -74,25 +74,24 @@
         /* 当屏幕宽度小于等于768px时的样式调整 */
 
         /* 调整第一个表格的列宽 */
-        #editableTable th,
-        #editableTable td {
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-            margin-bottom: 5px; /* 添加间距，以免表格元素过于拥挤 */
+        #editableTable,
+        table[border="1"] {
+            display: flex;
+            flex-wrap: wrap;
         }
 
-        /* 调整第二个表格的列宽 */
+        #editableTable th,
+        #editableTable td,
         table[border="1"] th,
         table[border="1"] td {
-            display: block;
-            width: 100%;
+            flex: 1 0 100%; /* 每列占据整个宽度 */
             box-sizing: border-box;
-            margin-bottom: 5px; /* 添加间距，以免表格元素过于拥挤 */
+            padding: 8px; /* 保持原有的内边距 */
         }
 
         /* 调整表头样式 */
-        #editableTable th {
+        #editableTable th,
+        table[border="1"] th {
             background-color: #f2f2f2;
             border-top: 1px solid transparent;
         }
