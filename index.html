@@ -7,69 +7,93 @@
     <title>Editable Table with Firestore Update</title>
     <style>
         body {
-        padding: 30px;
-    }
+            padding: 30px;
+        }
 
-    table {
-        border-collapse: collapse;
-        width: 100%;
-    }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-    table,
-    th,
-    td {
-        border: 1px solid black;
-    }
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
 
-    th,
-    td {
-        padding: 8px;
-        text-align: left;
-    }
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
 
-    th {
-        background-color: #f2f2f2;
-    }
+        th {
+            background-color: #f2f2f2;
+        }
 
-    .tit-box {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
+        .tit-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
 
-    .save-btn {
-        padding: 8px 12px;
-        background: #1677ff;
-        color: white;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 10px;
-        display: inline-block;
-    }
+        .save-btn {
+            padding: 8px 12px;
+            background: #1677ff;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            display: inline-block;
+        }
 
-    /* 调整第一个表格的列宽 */
-    #editableTable th,
-    #editableTable td {
-        width: 14.2857%; /* 根据需要调整每列的宽度 */
-    }
+        /* 调整列宽 */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 5%; /* 根据需要调整宽度 */
+        }
 
-    /* 调整第二个表格的列宽 */
-    table[border="1"] th,
-    table[border="1"] td {
-        width: 14.2857%; /* 根据需要调整每列的宽度 */
-    }
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 15%; /* 根据需要调整宽度 */
+        }
 
-    th, td {
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 10%; /* 根据需要调整宽度 */
+        }
+
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 10%; /* 根据需要调整宽度 */
+        }
+
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 10%; /* 根据需要调整宽度 */
+        }
+
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 10%; /* 根据需要调整宽度 */
+        }
+
+        th:nth-child(7),
+        td:nth-child(7) {
+            width: 10%; /* 根据需要调整宽度 */
+        }
+
+        th, td {
         padding: 8px;
         text-align: left;
         border: 1px solid black; /* 保留其他边框 */
-    }
+        }
 
-    th {
+        th {
         background-color: #f2f2f2;
         border-top: 1px solid transparent; /* 将上边框颜色设为透明 */
-    }
-        
+        }
+
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
@@ -296,13 +320,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
