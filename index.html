@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Table with Firestore Update</title>
+    <title>可编辑表格与Firestore更新</title>
     <style>
         body {
             padding: 30px;
+            font-family: Arial, sans-serif;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
+            margin-bottom: 20px;
         }
 
         table,
@@ -35,6 +37,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            margin-bottom: 20px;
         }
 
         .save-btn {
@@ -43,46 +46,69 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
-            margin-top: 10px;
             display: inline-block;
         }
 
-        /* Adjust column widths */
-        th:nth-child(1),
-        td:nth-child(1) {
-            width: 5%; /* Adjust the width as needed */
+        /* 调整第一个表格的列宽 */
+        table#editableTable th:nth-child(1),
+        table#editableTable td:nth-child(1) {
+            width: 5%;
         }
 
-        th:nth-child(2),
-        td:nth-child(2) {
-            width: 15%; /* Adjust the width as needed */
+        table#editableTable th:nth-child(2),
+        table#editableTable td:nth-child(2) {
+            width: 15%;
         }
 
-        th:nth-child(3),
-        td:nth-child(3) {
-            width: 10%; /* Adjust the width as needed */
+        table#editableTable th:nth-child(3),
+        table#editableTable td:nth-child(3),
+        table#editableTable th:nth-child(4),
+        table#editableTable td:nth-child(4),
+        table#editableTable th:nth-child(5),
+        table#editableTable td:nth-child(5),
+        table#editableTable th:nth-child(6),
+        table#editableTable td:nth-child(6),
+        table#editableTable th:nth-child(7),
+        table#editableTable td:nth-child(7) {
+            width: 10%;
         }
 
-        th:nth-child(4),
-        td:nth-child(4) {
-            width: 10%; /* Adjust the width as needed */
+        /* 第二个表格的样式 */
+        table#additionalTable {
+            border-collapse: collapse;
+            width: 100.031%;
+            border-color: #000000;
+            margin-bottom: 20px;
         }
 
-        th:nth-child(5),
-        td:nth-child(5) {
-            width: 10%; /* Adjust the width as needed */
+        table#additionalTable tbody tr {
+            height: 57.5682px;
         }
 
-        th:nth-child(6),
-        td:nth-child(6) {
-            width: 10%; /* Adjust the width as needed */
+        table#additionalTable th,
+        table#additionalTable td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
         }
 
-        th:nth-child(7),
-        td:nth-child(7) {
-            width: 10%; /* Adjust the width as needed */
+        table#additionalTable th:nth-child(1),
+        table#additionalTable td:nth-child(1) {
+            width: 19.8892%;
+            background-color: #fcb54f;
         }
 
+        table#additionalTable th:nth-child(2),
+        table#additionalTable td:nth-child(2),
+        table#additionalTable th:nth-child(3),
+        table#additionalTable td:nth-child(3),
+        table#additionalTable th:nth-child(4),
+        table#additionalTable td:nth-child(4),
+        table#additionalTable th:nth-child(5),
+        table#additionalTable td:nth-child(5) {
+            width: 80.0942%;
+            background-color: #fcb54f;
+        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
@@ -92,9 +118,122 @@
 
 <body>
     <div class="tit-box">
-        <h2>Editable Table with Firestore Update</h2>
+        <h2>可编辑表格与Firestore更新</h2>
     </div>
 
+    <!-- 第二个表格 -->
+    <table id="additionalTable"
+        style="border-collapse: collapse; width: 100.031%; height: 441.227px; border-color: #000000;">
+        <tbody>
+            <tr style="height: 57.5682px;">
+<td style="width: 19.8892%; height: 57.5682px; background-color: #fcb54f;"><strong>&nbsp; &nbsp;Project Name&nbsp;</strong></td>
+<td style="width: 80.0942%; height: 57.5682px; background-color: #fcb54f;" colspan="4">&nbsp; Nam Cheong 220 Relocation&nbsp;<br />&nbsp; (under Project : Transitional Housing at Wong Yue Tan, Tai Po)&nbsp;</td>
+</tr>
+<tr style="height: 33.5682px;">
+<td style="width: 19.8892%; height: 33.5682px; background-color: #c2e0f4;"><strong>&nbsp; Module Code&nbsp;</strong></td>
+<td style="height: 33.5682px; width: 80.0942%;" colspan="4"><span style="font-size: 12pt;">&nbsp; 2-1-4&nbsp;</span></td>
+</tr>
+<tr style="height: 19.5909px;">
+<td style="height: 78.3864px; width: 19.8892%; background-color: #c2e0f4;" rowspan="2"><strong>&nbsp; Basic Information</strong></td>
+<td style="width: 20.1963%; height: 19.5909px;">&nbsp; Dimension&nbsp;</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Structure</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Floor&nbsp;</td>
+<td style="width: 19.8124%; height: 19.5909px;">&nbsp; Function&nbsp;&nbsp;</td>
+</tr>
+<tr style="height: 58.7955px;">
+<td style="width: 20.1963%; height: 58.7955px;">&nbsp; (W) 2438&nbsp; mm<br />&nbsp; (L) 12192 mm<br />&nbsp; (H) 2896&nbsp; mm</td>
+<td style="width: 20.0428%; height: 58.7955px;">&nbsp; Steel MiC&nbsp;</td>
+<td style="width: 20.0428%; height: 58.7955px;">&nbsp; 2/f&nbsp;</td>
+<td style="width: 19.8124%; height: 58.7955px;">&nbsp; Residential Unit</td>
+</tr>
+<tr style="height: 19.5909px;">
+<td style="height: 67.1818px; width: 19.8892%; background-color: #ced4d9;" rowspan="2"><strong>&nbsp; Disassembly Details&nbsp;</strong></td>
+<td style="width: 20.1963%; height: 19.5909px;">&nbsp; Date of dismantling</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Time</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Serial No. of the Mobile Crane</td>
+<td style="width: 19.8124%; height: 19.5909px;">&nbsp; Serial No. of the lifting frame&nbsp;</td>
+</tr>
+<tr style="height: 47.5909px;">
+<td style="width: 20.1963%; height: 47.5909px;">
+<p>&nbsp; 20 Feb 2023&nbsp;</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; 08:45</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; DEMAG 2202-5</p>
+</td>
+<td style="width: 19.8124%; height: 47.5909px;">
+<p>&nbsp; SP20-A</p>
+</td>
+</tr>
+<tr style="height: 19.5909px;">
+<td style="height: 67.1818px; width: 19.8892%; background-color: #ced4d9;" rowspan="2"><strong>&nbsp; Delivery Detail-01&nbsp;</strong><br /><strong>&nbsp; (from NC220 site to storage yard)</strong></td>
+<td style="width: 20.1963%; height: 19.5909px;">&nbsp; Date of Delivery</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Date of arrival</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Arrival time</td>
+<td style="width: 19.8124%; height: 19.5909px;">&nbsp; Delivery Truck car plate No.&nbsp;&nbsp;</td>
+</tr>
+<tr style="height: 47.5909px;">
+<td style="width: 20.1963%; height: 47.5909px;">
+<p>&nbsp; 20 Feb 2023</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; 20 Feb 2023&nbsp;</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; 10:15</p>
+</td>
+<td style="width: 19.8124%; height: 47.5909px;">
+<p>&nbsp; SX8884</p>
+</td>
+</tr>
+<tr style="height: 19.5909px;">
+<td style="height: 67.1818px; width: 19.8892%; background-color: #ced4d9;" rowspan="2"><strong>&nbsp; Delivery Detail-02&nbsp;</strong><br /><strong>&nbsp; (from storage yard to new site)</strong></td>
+<td style="width: 20.1963%; height: 19.5909px;">&nbsp; Date of Delivery</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Date of arrival</td>
+<td style="width: 20.0428%; height: 19.5909px;">&nbsp; Arrival time</td>
+<td style="width: 19.8124%; height: 19.5909px;">&nbsp; Delivery Truck car plate No.&nbsp;&nbsp;</td>
+</tr>
+<tr style="height: 47.5909px;">
+<td style="width: 20.1963%; height: 47.5909px;">
+<p>&nbsp; 21 Sept 2023</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; 21 Sept 2023&nbsp;</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; 14:30</p>
+</td>
+<td style="width: 19.8124%; height: 47.5909px;">
+<p>&nbsp; SX8884</p>
+</td>
+</tr>
+<tr style="height: 22.5682px;">
+<td style="height: 70.1591px; width: 19.8892%; background-color: #ced4d9;" rowspan="2"><strong>&nbsp; Reassembly Detail&nbsp;</strong></td>
+<td style="width: 20.1963%; height: 22.5682px;">&nbsp; Date of reassembly</td>
+<td style="width: 20.0428%; height: 22.5682px;">&nbsp; Date of completion of reassembly</td>
+<td style="width: 20.0428%; height: 22.5682px;">&nbsp; Serial No. of the mobile crane</td>
+<td style="width: 19.8124%; height: 22.5682px;">&nbsp; Serial No. of the lifting frame&nbsp;</td>
+</tr>
+<tr style="height: 47.5909px;">
+<td style="width: 20.1963%; height: 47.5909px;">
+<p>&nbsp; 21 Sept 2023</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; 21 Sept 2023</p>
+</td>
+<td style="width: 20.0428%; height: 47.5909px;">
+<p>&nbsp; DEMAG 2201-3</p>
+</td>
+<td style="width: 19.8124%; height: 47.5909px;">
+<p>&nbsp; SP20-A</p>
+</td>
+</tr>
+        </tbody>
+    </table>
+
+    <!-- 第一个表格 -->
     <table id="editableTable">
         <thead>
             <tr>
@@ -113,92 +252,47 @@
     </table>
 
     <div id="save-btn" class="save-btn" onclick="saveData()">
-        Save
+        保存
     </div>
 
     <script>
-        var datas = [];
-        // Firebase 配置，需要替换成您自己的配置
-        var firebaseConfig = {
-            apiKey: "AIzaSyAieo87PuMM8udmYTa9uwE0DaGvfpeK5X4",
-            authDomain: "table-b091a.firebaseapp.com",
-            projectId: "table-b091a",
-            storageBucket: "table-b091a.appspot.com",
-            messagingSenderId: "583106973229",
-            appId: "1:583106973229:web:04b0dcc889f394d22cf2a4",
-            measurementId: "G-M0HQP10EX0"
-        };
+        // 你的现有JavaScript代码在这里...
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-
-        // Get Firestore reference
-        var db = firebase.firestore();
-        const collectionName = "students";
-        // 获取集合中的数据
-        db.collection(collectionName)
-            .orderBy("id")
-            .get()
-            .then((querySnapshot) => {
-                let html = '';
-                querySnapshot.forEach((doc) => {
-                    let item = doc.data();
-                    item._id = doc.id;
-                    console.log("item = ", item);
-                    html += `
-                        <tr _id="${item._id}">
-                            <td>${item.id}</td>
-                            <td>${item.name}</td>
-                            <td contentEditable>Class${item._id}</td>
-                            <td contentEditable>Male</td>
-                            <td contentEditable>${item.score}</td>
-                            <td contentEditable>${item.score1 || ''}</td>
-                            <td contentEditable>${item.score2 || ''}</td>
-                        </tr>
-                    `
-                });
-                document.getElementById('tbody').innerHTML = html;
-            })
-            .catch((error) => {
-                console.error("Error getting documents: ", error);
-            });
-
-        // 保存数据函数
+        // 保存数据的功能
         function saveData() {
             document.querySelectorAll('#editableTable tbody tr').forEach((row) => {
                 const id = row.getAttribute('_id');
                 console.log("_id = ", id)
-                const score = row.querySelector('td:nth-child(5)').textContent;
-                const score1 = row.querySelector('td:nth-child(6)').textContent;
-                const score2 = row.querySelector('td:nth-child(7)').textContent;
+                const score = row.querySelector('td:nth-child(3)').textContent;
+                const score1 = row.querySelector('td:nth-child(4)').textContent;
+                const score2 = row.querySelector('td:nth-child(5)').textContent;
 
-                // Update Firestore
+                // 更新到Firestore
                 db.collection(collectionName).doc(id).update({
-                    score: score,
-                    score1: score1,
-                    score2: score2,
-                })
+                        score: score,
+                        score1: score1,
+                        score2: score2,
+                    })
                     .then(() => {
-                        console.log(`Data for ID ${id} updated successfully!`);
-                        // 显示保存成功提示
+                        console.log(`ID为${id}的数据更新成功！`);
+                        // 显示成功消息
                         Swal.fire({
                             icon: 'success',
-                            title: 'Save Successful',
-                            showConfirmButton: false,
-                            timer: 1500 // 显示成功提示的时间，单位为毫秒
+                            title: '保存成功',
+                            text: `ID为${id}的数据已成功更新！`
                         });
                     })
                     .catch((error) => {
-                        console.error(`Error updating data for ID ${id}:`, error);
+                        console.error(`更新ID为${id}的数据时发生错误：`, error);
                     });
             });
         }
-
     </script>
 
 </body>
 
 </html>
+
 
 
 
