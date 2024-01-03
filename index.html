@@ -76,17 +76,25 @@
         /* 调整第一个表格的列宽 */
         #editableTable th,
         #editableTable td {
-            width: 100%; /* 让每列在移动端占据整个宽度 */
+            display: block;
+            width: 100%;
             box-sizing: border-box;
-            overflow: hidden; /* 避免溢出导致的乱码问题 */
+            margin-bottom: 5px; /* 添加间距，以免表格元素过于拥挤 */
         }
 
         /* 调整第二个表格的列宽 */
         table[border="1"] th,
         table[border="1"] td {
-            width: 100%; /* 让每列在移动端占据整个宽度 */
+            display: block;
+            width: 100%;
             box-sizing: border-box;
-            overflow: hidden; /* 避免溢出导致的乱码问题 */
+            margin-bottom: 5px; /* 添加间距，以免表格元素过于拥挤 */
+        }
+
+        /* 调整表头样式 */
+        #editableTable th {
+            background-color: #f2f2f2;
+            border-top: 1px solid transparent;
         }
     }
 
