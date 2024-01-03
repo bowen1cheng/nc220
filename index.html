@@ -149,13 +149,12 @@
                         <tr _id="${item._id}">
                             <td>${item.id}</td>
                             <td>${item.name}</td>
+                            <td contentEditable>Class${item._id}</td>
+                            <td contentEditable>Male</td>
                             <td contentEditable>${item.score}</td>
                             <td contentEditable>${item.score1 || ''}</td>
                             <td contentEditable>${item.score2 || ''}</td>
-                            <td contentEditable>Male</td>
-                            <td contentEditable>Class${item._id}</td>
                         </tr>
-                    `
                 });
                 document.getElementById('tbody').innerHTML = html;
             })
