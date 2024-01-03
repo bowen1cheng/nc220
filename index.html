@@ -77,16 +77,16 @@
         #editableTable th,
         #editableTable td {
             width: 100%; /* 让每列在移动端占据整个宽度 */
-            display: block;
             box-sizing: border-box;
+            overflow: hidden; /* 避免溢出导致的乱码问题 */
         }
 
         /* 调整第二个表格的列宽 */
         table[border="1"] th,
         table[border="1"] td {
             width: 100%; /* 让每列在移动端占据整个宽度 */
-            display: block;
             box-sizing: border-box;
+            overflow: hidden; /* 避免溢出导致的乱码问题 */
         }
     }
 
