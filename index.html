@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editable Table with Firestore Update</title>
+    <title>NC220 Relocaiton Project</title>
     <style>
         body {
             padding: 30px;
@@ -255,7 +255,7 @@
 
         // 获取 Firestore 引用
         var db = firebase.firestore();
-        const collectionName = "students";
+        const collectionName = "components";
         // 从 Firestore 获取数据
         db.collection(collectionName)
             .orderBy("id")
@@ -269,12 +269,12 @@
                     html += `
                         <tr _id="${item._id}">
                             <td>${item.id}</td>
-                            <td>${item.name}</td>
-                            <td contentEditable>Class${item.class}</td>
-                            <td contentEditable>Male</td>
-                            <td contentEditable>${item.score}</td>
-                            <td contentEditable>${item.score1 || ''}</td>
-                            <td contentEditable>${item.score2 || ''}</td>
+                            <td>${item.class}</td>
+                            <td>${item.material}</td>
+                            <td contentEditable>${item.amount}</td>
+                            <td>${item.unit}</td>
+                            <td contentEditable>${item.reuse rate || ''}</td>
+                            <td contentEditable>${item.repair rate || ''}</td>
                         </tr>
                     `
                 });
@@ -289,15 +289,15 @@
             document.querySelectorAll('#editableTable tbody tr').forEach((row) => {
                 const id = row.getAttribute('_id');
                 console.log("_id = ", id)
-                const score = row.querySelector('td:nth-child(5)').textContent;
+                const score = row.querySelector('td:nth-child(4)').textContent;
                 const score1 = row.querySelector('td:nth-child(6)').textContent;
                 const score2 = row.querySelector('td:nth-child(7)').textContent;
 
                 // 更新 Firestore
                 db.collection(collectionName).doc(id).update({
-                    score: score,
-                    score1: score1,
-                    score2: score2,
+                    score: amount,
+                    score1: reuse rate,
+                    score2: repair rate,
                 })
                     .then(() => {
                         console.log(`Data for ID ${id} updated successfully!`);
@@ -306,7 +306,7 @@
                             icon: 'success',
                             title: 'Save Successful',
                             showConfirmButton: false,
-                            timer: 1500 // 显示成功提示的时间，单位为毫秒
+                            timer: 3000 // 显示成功提示的时间，单位为毫秒
                         });
                     })
                     .catch((error) => {
