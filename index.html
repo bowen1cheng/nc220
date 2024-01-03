@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>可编辑表格与Firestore更新</title>
+    <title>Editable Table with Firestore Update</title>
     <style>
         body {
             padding: 30px;
-            font-family: Arial, sans-serif;
         }
 
         table {
             border-collapse: collapse;
             width: 100%;
-            margin-bottom: 20px;
         }
 
         table,
@@ -37,7 +35,6 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 20px;
         }
 
         .save-btn {
@@ -46,69 +43,46 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
+            margin-top: 10px;
             display: inline-block;
         }
 
-        /* 调整第一个表格的列宽 */
-        table#editableTable th:nth-child(1),
-        table#editableTable td:nth-child(1) {
-            width: 5%;
+        /* 调整列宽 */
+        th:nth-child(1),
+        td:nth-child(1) {
+            width: 5%; /* 根据需要调整宽度 */
         }
 
-        table#editableTable th:nth-child(2),
-        table#editableTable td:nth-child(2) {
-            width: 15%;
+        th:nth-child(2),
+        td:nth-child(2) {
+            width: 15%; /* 根据需要调整宽度 */
         }
 
-        table#editableTable th:nth-child(3),
-        table#editableTable td:nth-child(3),
-        table#editableTable th:nth-child(4),
-        table#editableTable td:nth-child(4),
-        table#editableTable th:nth-child(5),
-        table#editableTable td:nth-child(5),
-        table#editableTable th:nth-child(6),
-        table#editableTable td:nth-child(6),
-        table#editableTable th:nth-child(7),
-        table#editableTable td:nth-child(7) {
-            width: 10%;
+        th:nth-child(3),
+        td:nth-child(3) {
+            width: 10%; /* 根据需要调整宽度 */
         }
 
-        /* 第二个表格的样式 */
-        table#additionalTable {
-            border-collapse: collapse;
-            width: 100.031%;
-            border-color: #000000;
-            margin-bottom: 20px;
+        th:nth-child(4),
+        td:nth-child(4) {
+            width: 10%; /* 根据需要调整宽度 */
         }
 
-        table#additionalTable tbody tr {
-            height: 57.5682px;
+        th:nth-child(5),
+        td:nth-child(5) {
+            width: 10%; /* 根据需要调整宽度 */
         }
 
-        table#additionalTable th,
-        table#additionalTable td {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
+        th:nth-child(6),
+        td:nth-child(6) {
+            width: 10%; /* 根据需要调整宽度 */
         }
 
-        table#additionalTable th:nth-child(1),
-        table#additionalTable td:nth-child(1) {
-            width: 19.8892%;
-            background-color: #fcb54f;
+        th:nth-child(7),
+        td:nth-child(7) {
+            width: 10%; /* 根据需要调整宽度 */
         }
 
-        table#additionalTable th:nth-child(2),
-        table#additionalTable td:nth-child(2),
-        table#additionalTable th:nth-child(3),
-        table#additionalTable td:nth-child(3),
-        table#additionalTable th:nth-child(4),
-        table#additionalTable td:nth-child(4),
-        table#additionalTable th:nth-child(5),
-        table#additionalTable td:nth-child(5) {
-            width: 80.0942%;
-            background-color: #fcb54f;
-        }
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
@@ -118,12 +92,33 @@
 
 <body>
     <div class="tit-box">
-        <h2>可编辑表格与Firestore更新</h2>
+        <h2>Editable Table with Firestore Update</h2>
+    </div>
+
+    <!-- 第一个表格 -->
+    <table id="editableTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Gender</th>
+                <th>Score</th>
+                <th>Score2</th>
+                <th>Score3</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+
+    <div id="save-btn" class="save-btn" onclick="saveData()">
+        Save
     </div>
 
     <!-- 第二个表格 -->
-    <table id="additionalTable"
-        style="border-collapse: collapse; width: 100.031%; height: 441.227px; border-color: #000000;">
+    <table style="border-collapse: collapse; width: 100.031%; height: 441.227px; border-color: #000000;" border="1">
         <tbody>
             <tr style="height: 57.5682px;">
 <td style="width: 19.8892%; height: 57.5682px; background-color: #fcb54f;"><strong>&nbsp; &nbsp;Project Name&nbsp;</strong></td>
@@ -233,65 +228,90 @@
         </tbody>
     </table>
 
-    <!-- 第一个表格 -->
-    <table id="editableTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Class</th>
-                <th>Gender</th>
-                <th>Score</th>
-                <th>Score2</th>
-                <th>Score3</th>
-            </tr>
-        </thead>
-        <tbody id="tbody">
-
-        </tbody>
-    </table>
-
-    <div id="save-btn" class="save-btn" onclick="saveData()">
-        保存
-    </div>
-
     <script>
-        // 你的现有JavaScript代码在这里...
+        var datas = [];
+        // Firebase 配置，需要替换成您自己的配置
+        var firebaseConfig = {
+            apiKey: "AIzaSyAieo87PuMM8udmYTa9uwE0DaGvfpeK5X4",
+            authDomain: "table-b091a.firebaseapp.com",
+            projectId: "table-b091a",
+            storageBucket: "table-b091a.appspot.com",
+            messagingSenderId: "583106973229",
+            appId: "1:583106973229:web:04b0dcc889f394d22cf2a4",
+            measurementId: "G-M0HQP10EX0"
+        };
 
-        // 保存数据的功能
+        // 初始化 Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // 获取 Firestore 引用
+        var db = firebase.firestore();
+        const collectionName = "students";
+        // 从 Firestore 获取数据
+        db.collection(collectionName)
+            .orderBy("id")
+            .get()
+            .then((querySnapshot) => {
+                let html = '';
+                querySnapshot.forEach((doc) => {
+                    let item = doc.data();
+                    item._id = doc.id;
+                    console.log("item = ", item);
+                    html += `
+                        <tr _id="${item._id}">
+                            <td>${item.id}</td>
+                            <td>${item.name}</td>
+                            <td contentEditable>Class${item._id}</td>
+                            <td contentEditable>Male</td>
+                            <td contentEditable>${item.score}</td>
+                            <td contentEditable>${item.score1 || ''}</td>
+                            <td contentEditable>${item.score2 || ''}</td>
+                        </tr>
+                    `
+                });
+                document.getElementById('tbody').innerHTML = html;
+            })
+            .catch((error) => {
+                console.error("Error getting documents: ", error);
+            });
+
+        // 保存数据
         function saveData() {
             document.querySelectorAll('#editableTable tbody tr').forEach((row) => {
                 const id = row.getAttribute('_id');
                 console.log("_id = ", id)
-                const score = row.querySelector('td:nth-child(3)').textContent;
-                const score1 = row.querySelector('td:nth-child(4)').textContent;
-                const score2 = row.querySelector('td:nth-child(5)').textContent;
+                const score = row.querySelector('td:nth-child(5)').textContent;
+                const score1 = row.querySelector('td:nth-child(6)').textContent;
+                const score2 = row.querySelector('td:nth-child(7)').textContent;
 
-                // 更新到Firestore
+                // 更新 Firestore
                 db.collection(collectionName).doc(id).update({
-                        score: score,
-                        score1: score1,
-                        score2: score2,
-                    })
+                    score: score,
+                    score1: score1,
+                    score2: score2,
+                })
                     .then(() => {
-                        console.log(`ID为${id}的数据更新成功！`);
-                        // 显示成功消息
+                        console.log(`Data for ID ${id} updated successfully!`);
+                        // 显示保存成功提示
                         Swal.fire({
                             icon: 'success',
-                            title: '保存成功',
-                            text: `ID为${id}的数据已成功更新！`
+                            title: 'Save Successful',
+                            showConfirmButton: false,
+                            timer: 1500 // 显示成功提示的时间，单位为毫秒
                         });
                     })
                     .catch((error) => {
-                        console.error(`更新ID为${id}的数据时发生错误：`, error);
+                        console.error(`Error updating data for ID ${id}:`, error);
                     });
             });
         }
+
     </script>
 
 </body>
 
 </html>
+
 
 
 
