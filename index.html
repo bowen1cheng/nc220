@@ -286,34 +286,34 @@
 
         // 保存数据
         function saveData() {
-            document.querySelectorAll('#editableTable tbody tr').forEach((row) => {
-                const id = row.getAttribute('_id');
-                console.log("_id = ", id)
-                const score = row.querySelector('td:nth-child(4)').textContent;
-                const score1 = row.querySelector('td:nth-child(6)').textContent;
-                const score2 = row.querySelector('td:nth-child(7)').textContent;
+    document.querySelectorAll('#editableTable tbody tr').forEach((row) => {
+        const id = row.getAttribute('_id');
+        console.log("_id = ", id)
+        const amount = row.querySelector('td:nth-child(4)').textContent;
+        const reuse = row.querySelector('td:nth-child(6)').textContent;
+        const repair = row.querySelector('td:nth-child(7)').textContent;
 
-                // 更新 Firestore
-                db.collection(collectionName).doc(id).update({
-                    score: amount,
-                    score1: reuse,
-                    score2: repair,
-                })
-                    .then(() => {
-                        console.log(`Data for ID ${id} updated successfully!`);
-                        // 显示保存成功提示
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Save Successful',
-                            showConfirmButton: false,
-                            timer: 3000 // 显示成功提示的时间，单位为毫秒
-                        });
-                    })
-                    .catch((error) => {
-                        console.error(`Error updating data for ID ${id}:`, error);
-                    });
+        // 更新 Firestore
+        db.collection(collectionName).doc(id).update({
+            amount: amount,
+            reuse: reuse,
+            repair: repair,
+        })
+        .then(() => {
+            console.log(`Data for ID ${id} updated successfully!`);
+            // 显示保存成功提示
+            Swal.fire({
+                icon: 'success',
+                title: 'Save Successful',
+                showConfirmButton: false,
+                timer: 1500 // 显示成功提示的时间，单位为毫秒
             });
-        }
+        })
+        .catch((error) => {
+            console.error(`Error updating data for ID ${id}:`, error);
+        });
+    });
+}
 
     </script>
 
