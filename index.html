@@ -70,6 +70,26 @@
         border-top: 1px solid transparent; /* 将上边框颜色设为透明 */
     }
 
+    @media (max-width: 768px) {
+        /* 当屏幕宽度小于等于768px时的样式调整 */
+
+        /* 调整第一个表格的列宽 */
+        #editableTable th,
+        #editableTable td {
+            width: 100%; /* 让每列在移动端占据整个宽度 */
+            display: block;
+            box-sizing: border-box;
+        }
+
+        /* 调整第二个表格的列宽 */
+        table[border="1"] th,
+        table[border="1"] td {
+            width: 100%; /* 让每列在移动端占据整个宽度 */
+            display: block;
+            box-sizing: border-box;
+        }
+    }
+
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
     <script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-app.js"></script>
