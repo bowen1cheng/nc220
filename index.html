@@ -83,9 +83,15 @@
             width: 10%; /* 根据需要调整宽度 */
         }
 
-        /* 修改第二个表格上边框为透明 */
-        table:nth-child(2) {
-            border-top: 1px solid transparent;
+        th, td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid black; /* 保留其他边框 */
+        }
+
+        th {
+        background-color: #f2f2f2;
+        border-top: 1px solid transparent; /* 将上边框颜色设为透明 */
         }
 
     </style>
