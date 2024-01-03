@@ -71,61 +71,23 @@
     }
 
    @media only screen and (max-width: 600px) {
-    table[border="1"] {
-        display: block;
+    table[border="1"] tbody {
+        display: flex;
+        flex-direction: column;
+    }
+
+    table[border="1"] tr {
         width: 100%;
-        overflow-x: auto;
-    }
-
-    table[border="1"] thead,
-    table[border="1"] tbody,
-    table[border="1"] th,
-    table[border="1"] td,
-    table[border="1"] tr {
-        display: block;
-    }
-
-    table[border="1"] thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-    }
-
-    table[border="1"] tr {
+        box-sizing: border-box;
+        border: 1px solid black; /* 可根据需要添加边框 */
         margin-bottom: 15px;
     }
 
     table[border="1"] td {
-        border: none;
-        position: relative;
-        padding-left: 50%;
-    }
-
-    table[border="1"] td:before {
-        content: attr(data-label);
-        position: absolute;
-        left: 0;
-        width: 50%;
-        padding-right: 15px;
-        font-weight: bold;
-    }
-}
-
-/* 用于大屏幕 */
-@media only screen and (min-width: 601px) {
-    table[border="1"] {
+        display: block;
         width: 100%;
-    }
-
-    table[border="1"] th,
-    table[border="1"] td {
+        box-sizing: border-box;
         text-align: left;
-        padding: 8px;
-        border: 1px solid black;
-    }
-
-    table[border="1"] th {
-        background-color: #f2f2f2;
     }
 }
         
